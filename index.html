@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,10 +10,16 @@
 
 <title>Analysing the effect of bog ditches on Sphagnum communities</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -69,15 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./ch_data_exploration.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-be105cbfa3c5969fcf3a11ef7def5ebd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f7a035c76d4d7289c1b362e397d1ce92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -249,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="intro" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>This web page documents the preparation of a data set on the effects of hydrological disturbance on the growth of Sphagnum mosses on a Norwegian bog, before uploading it to GBIF.</p>
-<p>After this initial introduction chapter, <span class="citation" data-cites="data-exp">(<a href="#ref-data-exp" role="doc-biblioref"><strong>data-exp?</strong></a>)</span> goes through the data cleaning and general formatting, and <span class="citation" data-cites="mapping">(<a href="#ref-mapping" role="doc-biblioref"><strong>mapping?</strong></a>)</span> describes how individual columns in the spreadsheet have been mapped to DwC terms.</p>
+<p>After this initial introduction chapter, <a href="ch_data_exploration.html" class="quarto-xref"><span>Chapter 2</span></a> goes through the data cleaning and general formatting, and <a href="ch_mapping.html" class="quarto-xref"><span>Chapter 3</span></a> describes how individual columns in the spreadsheet have been mapped to DwC terms.</p>
 <p>The raw datafiles are found under <code>data/</code>and has not been altered. Instead, all data manipulation (formatting, fixing typos, adding metadata etc.) has been scripted and is presented in this work.</p>
 <p>The data collection was done by employees at the NTNU University Museum during the years 2017-2022. Part of the motivation for this work was to get baseline data before a planned mire resturation project. The mire resturation has not been realised. However, the data also serves as a valuabla dataset for environmental gradient analyses of Sphagnum communities.</p>
 <p><a href="#fig-studyMap" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> shows a map of the bog, which is a relatively large ombrotrophic bog previously used for peat extraction, and also drained and used for forest plantations. Sphagnum growth was measured using the cranked wire technique on permanent vegetation quadrats (n = 28) from 2017 to 2022 (5 growing seasons). Each vegetation quadrat has 16 points (i.e.&nbsp;pins) and each pin was measured up to 4 times on each sampling occasion (on each side and by different people). The first 18 vegetation plots were initiated in 2017 and are paired with water table well that log the water table depth. These vegetation plots are situated in homogeneous vegetation types (bog lawns), but with varying distance to disturbances (extraction sites and ditches). The quadrats numbered 18-28 were initiated in 2021 and a placed relatively for from the hydrological disturbances, but in varying communities (hollows and hummoks).</p>
@@ -298,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">shape=</span><span class="dv">21</span>,</span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> <span class="st">"green"</span>,</span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha =</span> <span class="fl">0.5</span>)  <span class="sc">+</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">

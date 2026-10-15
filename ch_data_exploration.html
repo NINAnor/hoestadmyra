@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>2&nbsp; Data exploration and cleaning – Analysing the effect of bog ditches on Sphagnum communities</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -69,15 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-be105cbfa3c5969fcf3a11ef7def5ebd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f7a035c76d4d7289c1b362e397d1ce92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -247,7 +252,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="data-exp" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data exploration and cleaning</span></span></h1>
+<h1 class="title"><span id="sec-data-exp" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data exploration and cleaning</span></span></h1>
 </div>
 
 
@@ -335,8 +340,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(dat <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-435afe17d4f8753aaf5b" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-435afe17d4f8753aaf5b">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10"],["13.5","5.2","26.15","7.3","28.6","29.7","7.2","10.16","17.14","24.7"],[13,5,26,7,28,29,7,10,17,24],[5,2,15,3,6,7,2,16,14,7],["T1","R1","HUMMOCK","K","HOLLOW","EDGE","K","M","T1","HOLLOW"],[11.4,null,null,null,null,null,null,null,null,null],["2017-05-03T00:00:00Z","2019-05-15T00:00:00Z","2021-05-21T00:00:00Z","2022-05-26T00:00:00Z","2021-05-21T00:00:00Z","2021-05-21T00:00:00Z","2022-05-23T00:00:00Z","2020-05-18T00:00:00Z","2021-05-10T00:00:00Z","2022-05-12T00:00:00Z"],[null,"AL, TBM","MF, TH, LM","MF","MF, TH, LM","MF, TH, LM","MF, MK","AL, KH","MF, DIØ","MF, MK"],["11.4",null,null,null,null,null,null,null,null,null],["2017-11-03T00:00:00Z","2019-10-24T00:00:00Z","2021-10-13T00:00:00Z","2020-09-30T00:00:00Z","2021-10-13T00:00:00Z","2021-10-13T00:00:00Z","2022-10-05T00:00:00Z","2020-09-29T00:00:00Z","2021-10-03T00:00:00Z","2022-10-03T00:00:00Z"],[null,"MØN, MM","MF, LML","MF, TH","MF, LML","MF, LML","OM, DM","MF","MF, LMFL","KH, Tiril"],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[2017,2019,2021,2020,2021,2021,2022,2020,2021,2022],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,"Målt front, &gt;1cm W"],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,"2019-07-22T00:00:00Z",null,null,null,null,null,null,null,null],[null,"LM, MØN",null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,"Frisk",null,"Litt nedbrutt",null,"Noe mørke, pinne har nørt pressa ned",null,null],[null,14.3,5.7,5.4,7,9.6,7.6,8.199999999999999,9.199999999999999,6],[null,14.6,5.7,5.2,7.9,10.5,7.5,7.9,9.199999999999999,6],[null,14.2,5.5,5.7,7,9.6,7.4,8.6,9.4,5.9],[null,14.7,5.4,5.7,7.9,10.6,7.5,8.199999999999999,9.199999999999999,5.8],[null,null,null,null,null,null,null,null,null,null],[null,14.5,null,null,null,null,null,null,null,null],[null,15.1,null,null,null,null,null,null,null,null],[null,14.6,null,null,null,null,null,null,null,null],[null,15.5,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,14.8,5.2,4.5,7.1,10.5,4.3,7,8.300000000000001,5],[null,16,5.3,4.7,6.8,10.3,4.5,5,8.4,5.5],[null,15,5.2,4.6,7,10.4,4.4,6.7,8.300000000000001,5],[null,16,5.4,4.6,6.8,10.3,4.5,4.7,8.4,5.2],[null,null,null,null,null,null,null,null,null,null],[null,null,"med","pap","maj","ang","rub","med","med","pap"],[null,null,"med","fus","maj","ang","pap","med","rub","ten"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>Plot_no<\/th>\n      <th>Pin_no<\/th>\n      <th>Treatment<\/th>\n      <th>HeightSPRING<\/th>\n      <th>DateSPRING<\/th>\n      <th>ObserverSPRING<\/th>\n      <th>HeightFALL<\/th>\n      <th>DateFALL<\/th>\n      <th>ObserverFALL<\/th>\n      <th>diff_oct_nov<\/th>\n      <th>diff_may_oct<\/th>\n      <th>comment<\/th>\n      <th>tab_year<\/th>\n      <th>HeightSPRING_V1<\/th>\n      <th>HeightSPRING_V2<\/th>\n      <th>HeightSPRINGRejected1<\/th>\n      <th>HeightSPRINGRejected2<\/th>\n      <th>NotesSPRING<\/th>\n      <th>HeightSUMMER_H1<\/th>\n      <th>HeightSUMMER_H2<\/th>\n      <th>HeightSUMMER_H3<\/th>\n      <th>HeightSUMMER_V1<\/th>\n      <th>HeightSUMMER_V2<\/th>\n      <th>DateSUMMER<\/th>\n      <th>ObserverSUMMER<\/th>\n      <th>NotesSUMMER<\/th>\n      <th>HeightFALL_V1<\/th>\n      <th>HeightFALL_V2<\/th>\n      <th>HeightFALL_H1<\/th>\n      <th>HeightFALL_H2<\/th>\n      <th>HeightFALL_H3<\/th>\n      <th>NotesFALL<\/th>\n      <th>HeightSPRING_W1<\/th>\n      <th>HeightSPRING_E1<\/th>\n      <th>HeightSPRING_W2<\/th>\n      <th>HeightSPRING_E2<\/th>\n      <th>CommentsSPRING_Marieke<\/th>\n      <th>HeightSUMMER_W1<\/th>\n      <th>HeightSUMMER_E1<\/th>\n      <th>HeightSUMMER_W2<\/th>\n      <th>HeightSUMMER_E2<\/th>\n      <th>CommentsSUMMER_Marieke<\/th>\n      <th>HeightFALL_W1<\/th>\n      <th>HeightFALL_E1<\/th>\n      <th>HeightFALL_W2<\/th>\n      <th>HeightFALL_E2<\/th>\n      <th>CommentsFALL_Marieke<\/th>\n      <th>Species_W<\/th>\n      <th>Species_E<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,5,14,15,16,17,18,20,21,22,23,24,28,29,30,31,34,35,36,37,39,40,41,42,44,45,46,47]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"Plot_no","targets":2},{"name":"Pin_no","targets":3},{"name":"Treatment","targets":4},{"name":"HeightSPRING","targets":5},{"name":"DateSPRING","targets":6},{"name":"ObserverSPRING","targets":7},{"name":"HeightFALL","targets":8},{"name":"DateFALL","targets":9},{"name":"ObserverFALL","targets":10},{"name":"diff_oct_nov","targets":11},{"name":"diff_may_oct","targets":12},{"name":"comment","targets":13},{"name":"tab_year","targets":14},{"name":"HeightSPRING_V1","targets":15},{"name":"HeightSPRING_V2","targets":16},{"name":"HeightSPRINGRejected1","targets":17},{"name":"HeightSPRINGRejected2","targets":18},{"name":"NotesSPRING","targets":19},{"name":"HeightSUMMER_H1","targets":20},{"name":"HeightSUMMER_H2","targets":21},{"name":"HeightSUMMER_H3","targets":22},{"name":"HeightSUMMER_V1","targets":23},{"name":"HeightSUMMER_V2","targets":24},{"name":"DateSUMMER","targets":25},{"name":"ObserverSUMMER","targets":26},{"name":"NotesSUMMER","targets":27},{"name":"HeightFALL_V1","targets":28},{"name":"HeightFALL_V2","targets":29},{"name":"HeightFALL_H1","targets":30},{"name":"HeightFALL_H2","targets":31},{"name":"HeightFALL_H3","targets":32},{"name":"NotesFALL","targets":33},{"name":"HeightSPRING_W1","targets":34},{"name":"HeightSPRING_E1","targets":35},{"name":"HeightSPRING_W2","targets":36},{"name":"HeightSPRING_E2","targets":37},{"name":"CommentsSPRING_Marieke","targets":38},{"name":"HeightSUMMER_W1","targets":39},{"name":"HeightSUMMER_E1","targets":40},{"name":"HeightSUMMER_W2","targets":41},{"name":"HeightSUMMER_E2","targets":42},{"name":"CommentsSUMMER_Marieke","targets":43},{"name":"HeightFALL_W1","targets":44},{"name":"HeightFALL_E1","targets":45},{"name":"HeightFALL_W2","targets":46},{"name":"HeightFALL_E2","targets":47},{"name":"CommentsFALL_Marieke","targets":48},{"name":"Species_W","targets":49},{"name":"Species_E","targets":50}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-ffb17444019f2e2035ae" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ffb17444019f2e2035ae">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10"],["12.12","13.2","9.4","18.16","12.6","13.7","13.9","18.3","18.8old","27.15"],[12,13,9,18,12,13,13,18,18,27],[12,2,4,16,6,7,9,3,8,15],["M","T1","K","T2","M","T1","T1","T2","T2","HOLLOW"],[null,null,null,null,null,null,null,11.9,null,null],["2019-10-05T00:00:00Z","2019-10-05T00:00:00Z","2019-05-15T00:00:00Z","2020-05-18T00:00:00Z","2022-05-11T00:00:00Z","2021-05-11T00:00:00Z","2021-05-11T00:00:00Z","2017-05-03T00:00:00Z","2020-05-18T00:00:00Z","2022-05-12T00:00:00Z"],["AL, TBM","AL, TBM","AL, TBM","AL, DIØ","MF, MK","DIØ, MF","DIØ, MF",null,"AL, DIØ","MF, MK"],[null,null,null,null,null,null,null,"10.6",null,null],["2019-10-21T00:00:00Z","2019-10-21T00:00:00Z","2019-10-24T00:00:00Z","2020-09-29T00:00:00Z","2022-10-03T00:00:00Z","2021-10-03T00:00:00Z","2021-10-03T00:00:00Z","2017-11-03T00:00:00Z","2020-09-29T00:00:00Z","2022-10-03T00:00:00Z"],["AL, MØN","AL, MØN","MF","MF, TH","OM","MF, LM","MF, LM",null,"MF, TH","KH, Tiril"],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[2019,2019,2019,2020,2022,2021,2021,2017,2020,2022],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],["2019-07-19T00:00:00Z","2019-07-19T00:00:00Z","2019-07-22T00:00:00Z",null,null,null,null,null,null,null],["MF, LM","PS, LM","LM, MØN",null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,"Svak farge",null,"rub(v), pap(ø) høst",null,null,"Nedbrutt rundt, ingen sphagnum, ny pinne",null],[8.199999999999999,10,14.9,8.1,7.7,11.2,12,null,10.8,8.6],[7.3,10.8,14.9,7.7,8,11.4,11.6,null,11.2,9.300000000000001],[8.699999999999999,9.800000000000001,14.8,8.1,7.5,11.5,11.7,null,10.8,8.699999999999999],[7.4,11.1,14.7,7.5,7.8,11.5,11.7,null,11.2,9.1],[null,null,null,null,null,null,null,null,null,null],[7.3,9.800000000000001,14.6,null,null,null,null,null,null,null],[7,10.4,15.2,null,null,null,null,null,null,null],[6.7,9.5,14.2,null,null,null,null,null,null,null],[7.2,10.4,15.1,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[6.2,10.2,13.9,7.3,7.7,10.7,11.2,null,10.5,8.199999999999999],[6.1,10,13.9,7,7.5,10.4,10.8,null,10.7,7.8],[6.3,10.1,13.8,7.1,7.5,10.6,11.5,null,null,8.5],[6.3,9.800000000000001,13.7,7,7.5,10.6,11.2,null,null,7.7],[null,null,null,null,null,null,null,null,null,null],[null,null,null,"pap","bal","pap","pap",null,null,"ten"],[null,null,null,"rub","med","pap","med",null,null,"bal"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>Plot_no<\/th>\n      <th>Pin_no<\/th>\n      <th>Treatment<\/th>\n      <th>HeightSPRING<\/th>\n      <th>DateSPRING<\/th>\n      <th>ObserverSPRING<\/th>\n      <th>HeightFALL<\/th>\n      <th>DateFALL<\/th>\n      <th>ObserverFALL<\/th>\n      <th>diff_oct_nov<\/th>\n      <th>diff_may_oct<\/th>\n      <th>comment<\/th>\n      <th>tab_year<\/th>\n      <th>HeightSPRING_V1<\/th>\n      <th>HeightSPRING_V2<\/th>\n      <th>HeightSPRINGRejected1<\/th>\n      <th>HeightSPRINGRejected2<\/th>\n      <th>NotesSPRING<\/th>\n      <th>HeightSUMMER_H1<\/th>\n      <th>HeightSUMMER_H2<\/th>\n      <th>HeightSUMMER_H3<\/th>\n      <th>HeightSUMMER_V1<\/th>\n      <th>HeightSUMMER_V2<\/th>\n      <th>DateSUMMER<\/th>\n      <th>ObserverSUMMER<\/th>\n      <th>NotesSUMMER<\/th>\n      <th>HeightFALL_V1<\/th>\n      <th>HeightFALL_V2<\/th>\n      <th>HeightFALL_H1<\/th>\n      <th>HeightFALL_H2<\/th>\n      <th>HeightFALL_H3<\/th>\n      <th>NotesFALL<\/th>\n      <th>HeightSPRING_W1<\/th>\n      <th>HeightSPRING_E1<\/th>\n      <th>HeightSPRING_W2<\/th>\n      <th>HeightSPRING_E2<\/th>\n      <th>CommentsSPRING_Marieke<\/th>\n      <th>HeightSUMMER_W1<\/th>\n      <th>HeightSUMMER_E1<\/th>\n      <th>HeightSUMMER_W2<\/th>\n      <th>HeightSUMMER_E2<\/th>\n      <th>CommentsSUMMER_Marieke<\/th>\n      <th>HeightFALL_W1<\/th>\n      <th>HeightFALL_E1<\/th>\n      <th>HeightFALL_W2<\/th>\n      <th>HeightFALL_E2<\/th>\n      <th>CommentsFALL_Marieke<\/th>\n      <th>Species_W<\/th>\n      <th>Species_E<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,5,14,15,16,17,18,20,21,22,23,24,28,29,30,31,34,35,36,37,39,40,41,42,44,45,46,47]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"Plot_no","targets":2},{"name":"Pin_no","targets":3},{"name":"Treatment","targets":4},{"name":"HeightSPRING","targets":5},{"name":"DateSPRING","targets":6},{"name":"ObserverSPRING","targets":7},{"name":"HeightFALL","targets":8},{"name":"DateFALL","targets":9},{"name":"ObserverFALL","targets":10},{"name":"diff_oct_nov","targets":11},{"name":"diff_may_oct","targets":12},{"name":"comment","targets":13},{"name":"tab_year","targets":14},{"name":"HeightSPRING_V1","targets":15},{"name":"HeightSPRING_V2","targets":16},{"name":"HeightSPRINGRejected1","targets":17},{"name":"HeightSPRINGRejected2","targets":18},{"name":"NotesSPRING","targets":19},{"name":"HeightSUMMER_H1","targets":20},{"name":"HeightSUMMER_H2","targets":21},{"name":"HeightSUMMER_H3","targets":22},{"name":"HeightSUMMER_V1","targets":23},{"name":"HeightSUMMER_V2","targets":24},{"name":"DateSUMMER","targets":25},{"name":"ObserverSUMMER","targets":26},{"name":"NotesSUMMER","targets":27},{"name":"HeightFALL_V1","targets":28},{"name":"HeightFALL_V2","targets":29},{"name":"HeightFALL_H1","targets":30},{"name":"HeightFALL_H2","targets":31},{"name":"HeightFALL_H3","targets":32},{"name":"NotesFALL","targets":33},{"name":"HeightSPRING_W1","targets":34},{"name":"HeightSPRING_E1","targets":35},{"name":"HeightSPRING_W2","targets":36},{"name":"HeightSPRING_E2","targets":37},{"name":"CommentsSPRING_Marieke","targets":38},{"name":"HeightSUMMER_W1","targets":39},{"name":"HeightSUMMER_E1","targets":40},{"name":"HeightSUMMER_W2","targets":41},{"name":"HeightSUMMER_E2","targets":42},{"name":"CommentsSUMMER_Marieke","targets":43},{"name":"HeightFALL_W1","targets":44},{"name":"HeightFALL_E1","targets":45},{"name":"HeightFALL_W2","targets":46},{"name":"HeightFALL_E2","targets":47},{"name":"CommentsFALL_Marieke","targets":48},{"name":"Species_W","targets":49},{"name":"Species_E","targets":50}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p><br></p>
@@ -394,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">date =</span> DateFALL)</span>
 <span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co"># A check looking into the warnings introduced when turning</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Hieght columns from characters to numeric. All fine.</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Height columns from characters to numeric. All fine.</span></span>
 <span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="co"># ch &lt;- dat |&gt;</span></span>
 <span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co">#   select(-contains(c("SPRING", "SUMMER", "diff"))) |&gt;</span></span>
 <span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="co">#   drop_na(HeightFALL) |&gt;</span></span>
@@ -429,15 +434,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(dat_fall, dat_spring)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>The long data is 14641 rows. This is too much to display as an html table on this web site, but here is a random sample of 50 rows just to illustrate.</p>
+<p>The long data is 14641 rows. Here is a random sample of 50 rows just to illustrate.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(dat_long <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">50</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-c425874d718231e0b6a8" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-c425874d718231e0b6a8">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"],["10.7","18.10","1.4","3.11","4.4","8.10","11.16","17.1","18.12","15.3","17.15","8.3","18.15new","4.4","16.3","4.16","9.3","4.9","6.8","5.3","3.5","3.11","13.2","3.11","8.14new","29.12","8.1","12.2","22.5","15.3","8.5","11.8","3.4","15.13","12.13","18.2","13.16","9.14","6.16NØ","29.6","15.10","6.13","1.13new","6.12","17.5","2.2","10.9new","2.16","2.11","18.15old"],[10,18,1,3,4,8,11,17,18,15,17,8,18,4,16,4,9,4,6,5,3,3,13,3,8,29,8,12,22,15,8,11,3,15,12,18,13,9,6,29,15,6,1,6,17,2,10,2,2,18],[7,10,4,11,4,10,16,1,12,3,15,3,15,4,3,16,3,9,8,3,5,11,2,11,14,12,1,2,5,3,5,8,4,13,13,2,16,14,16,6,10,13,13,12,5,2,9,16,11,15],["M","T2","R1","R1","R2","K","M","T1","T2","T1","T1","K","T2","R2","T2","R2","K","R2","R2","R1","R1","R1","T1","R1","K","EDGE","K","M","HOLLOW","T1","K","M","R1","T1","M","T2","T1","K","R2","EDGE","T1","R2","R1","R2","T1","R2","M","R2","R2","T2"],["2021-10-03T00:00:00Z","2019-10-21T00:00:00Z","2019-10-24T00:00:00Z","2018-05-02T00:00:00Z","2017-05-03T00:00:00Z","2022-05-23T00:00:00Z","2019-10-05T00:00:00Z","2020-09-29T00:00:00Z","2022-05-20T00:00:00Z","2021-10-03T00:00:00Z","2022-10-05T00:00:00Z","2019-05-15T00:00:00Z","2021-05-10T00:00:00Z","2022-05-20T00:00:00Z","2022-05-20T00:00:00Z","2022-10-05T00:00:00Z","2021-05-09T00:00:00Z","2018-10-16T00:00:00Z","2017-05-03T00:00:00Z","2021-09-26T00:00:00Z","2022-05-20T00:00:00Z","2021-05-11T00:00:00Z","2022-10-05T00:00:00Z","2017-05-03T00:00:00Z","2021-05-09T00:00:00Z","2022-05-12T00:00:00Z","2019-05-15T00:00:00Z","2022-10-03T00:00:00Z","2021-05-19T00:00:00Z","2021-10-03T00:00:00Z","2020-06-10T00:00:00Z","2018-10-17T00:00:00Z","2021-05-11T00:00:00Z","2021-10-03T00:00:00Z","2021-10-03T00:00:00Z","2018-05-02T00:00:00Z","2021-10-03T00:00:00Z","2019-05-15T00:00:00Z","2017-05-03T00:00:00Z","2021-10-13T00:00:00Z","2022-05-20T00:00:00Z","2019-10-24T00:00:00Z","2021-09-26T00:00:00Z","2019-10-24T00:00:00Z","2018-10-17T00:00:00Z","2022-05-20T00:00:00Z","2021-10-03T00:00:00Z","2021-09-26T00:00:00Z","2019-10-24T00:00:00Z","2021-05-10T00:00:00Z"],["MF, LM","AL, MØN","MØN, MM","MF, LD","","MF, MK","AL, TBM","MF, TH","MF, MK","MF, LM","","AL, TBM","MF, LM","MF","MF, MK","OM, DM","MF, LML","MF","","MF, NB","MF, MK","SN (1), TH (2)","OM, DM","","MF, LML","MF, MK","AL, TBM","OM","MF, LM","MF, LM","MF","MF","SN (1), TH (2)","MF, LM","MF, LM","MF, LD","MF, LM","AL, TBM","","MF, LML","MF, MK","MØN, MM","MF, NB","MØN, MM","MF","MF","MF, LM","MF, NB","MØN, MM","MF, LM"],["Målt front ø","","","","","Broken, new wire","","Frisk","New wire","","","","","","","","Lite søkk","","","pap(v), ten(ø)","New wire","","","","Sterk misfarget, bytte pinne","","Ny pinne","","","","Mørkere rundt, opptil 2.5cm","","","","Målt utenfor ring","","","","","ang(v), med(ø) høst","","","Noe nedbrutt","","","","","","","Kraftig svart ring"],[2021,2019,2019,2018,2017,2022,2019,2020,2022,2021,2022,2019,2021,2020,2022,2022,2021,2018,2017,2021,2022,2021,2022,2017,2021,2022,2019,2022,2021,2021,2020,2018,2021,2021,2021,2018,2021,2019,2017,2021,2022,2019,2021,2019,2018,2020,2021,2021,2019,2021],["med",null,null,null,null,"pap",null,"med","rub","pap","med",null,"rub","ten","rub","ten","pap",null,null,"pap","med","pap","med",null,"pap","ang",null,"rub","maj","pap","pap",null,"rub","med","ten",null,"rub",null,null,"ang","med",null,"fus",null,null,"med","med","pap",null,"pap"],["med",null,null,null,null,"pap",null,"med","rub","pap","med",null,"rub","med","rub","rub","pap",null,null,"pap","med","rub","ten",null,"pap","ang",null,"fus","lin","pap","pap",null,"rub","med","med",null,"ten",null,null,"ang","med",null,"rub",null,null,"bal","med","pap",null,"ten"],["W2","E2","E2","V2","single","W2","E1","W2","E2","W1","E2","E1","W1","W2","W2","E2","E1","V1","single","W2","E2","W2","E2","single","W2","W2","E1","W2","E1","E1","W2","H1","W1","E1","W1","V1","W1","W1","single","W1","E1","W1","W2","W1","H1","W2","W2","E2","W2","W1"],[6.5,9.4,11.8,9.4,12.5,10.7,11.7,13.4,9.5,7,10.4,6.8,11.1,11.9,9.300000000000001,12.8,10.2,10.9,14.3,14.8,12,8.9,8.1,9.4,11.3,12.4,9.4,8.1,10.7,7,10.6,13.5,10.3,7.8,8.800000000000001,11.6,5.1,11.5,11.7,10,8.6,13.2,14.5,16,14.9,8.6,7.5,7.8,9.6,6.2],["fall","fall","fall","spring","spring","spring","spring","fall","spring","fall","fall","spring","spring","spring","spring","fall","spring","fall","spring","fall","spring","spring","fall","spring","spring","spring","spring","fall","spring","fall","fall","fall","spring","fall","fall","spring","fall","spring","spring","fall","spring","fall","fall","fall","fall","spring","fall","fall","fall","spring"],[2021,2019,2019,2018,2017,2022,2019,2020,2022,2021,2022,2019,2021,2022,2022,2022,2021,2018,2017,2021,2022,2021,2022,2017,2021,2022,2019,2022,2021,2021,2020,2018,2021,2021,2021,2018,2021,2019,2017,2021,2022,2019,2021,2019,2018,2022,2021,2021,2019,2021]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>Plot_no<\/th>\n      <th>Pin_no<\/th>\n      <th>Treatment<\/th>\n      <th>date<\/th>\n      <th>Observer<\/th>\n      <th>Remarks<\/th>\n      <th>tab_year<\/th>\n      <th>Species_W<\/th>\n      <th>Species_E<\/th>\n      <th>pinPosition<\/th>\n      <th>Height_cm<\/th>\n      <th>season<\/th>\n      <th>year<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,8,12,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"Plot_no","targets":2},{"name":"Pin_no","targets":3},{"name":"Treatment","targets":4},{"name":"date","targets":5},{"name":"Observer","targets":6},{"name":"Remarks","targets":7},{"name":"tab_year","targets":8},{"name":"Species_W","targets":9},{"name":"Species_E","targets":10},{"name":"pinPosition","targets":11},{"name":"Height_cm","targets":12},{"name":"season","targets":13},{"name":"year","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-72a3748e8d6371bdfea3" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-72a3748e8d6371bdfea3">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"],["11.13","24.6","1.8","12.8","6.11new","7.12new","14.2","2.2","4.2","2.8","13.2","2.12","12.8","22.3","16.15","17.11new","4.8","17.6","1.14","12.5old","18.8","7.1new","11.1new","5.15","5.4","8.12","11.15new","5.11new","28.8","13.4","10.15old","1.13","4.1","6.2","2.10","7.12","17.10","18.6","14.7","16.2","17.6","14.16new","16.12","9.6","2.7","11.15","4.9","26.13","17.5","5.5"],[11,24,1,12,6,7,14,2,4,2,13,2,12,22,16,17,4,17,1,12,18,7,11,5,5,8,11,null,28,13,10,1,4,6,2,7,17,18,14,16,17,14,16,9,2,11,4,26,17,5],[13,6,8,8,11,12,2,2,2,8,2,12,8,3,15,11,8,6,14,5,8,1,1,15,4,12,15,null,8,4,15,13,1,2,10,12,10,6,7,2,6,16,12,6,7,15,9,13,5,5],["M","HOLLOW","R1","M","R2","K","T2","R2","R2","R2","T1","R2","M","HOLLOW","T2","T1","R2","T1","R1","M","T2","K","M","R1","R1","K","M",null,"EDGE","T1","M","R1","R2","R2","R2","K","T1","T2","T2","T2","T1","T2","T2","K","R2","M","R2","HUMMOCK","T1","R1"],["2022-10-03T00:00:00Z","2021-10-13T00:00:00Z","2022-10-05T00:00:00Z","2019-10-05T00:00:00Z","2021-05-10T00:00:00Z","2019-10-24T00:00:00Z","2021-10-03T00:00:00Z","2019-10-24T00:00:00Z","2022-05-20T00:00:00Z","2017-11-03T00:00:00Z","2018-05-02T00:00:00Z","2021-09-26T00:00:00Z","2018-05-02T00:00:00Z","2022-10-03T00:00:00Z","2019-10-05T00:00:00Z","2021-05-10T00:00:00Z","2022-05-23T00:00:00Z","2020-05-18T00:00:00Z","2018-10-16T00:00:00Z","2021-05-11T00:00:00Z","2022-10-05T00:00:00Z","2021-05-09T00:00:00Z","2021-10-03T00:00:00Z","2019-10-24T00:00:00Z","2022-05-23T00:00:00Z","2022-05-26T00:00:00Z","2021-05-11T00:00:00Z","2019-10-24T00:00:00Z","2022-05-12T00:00:00Z","2019-10-21T00:00:00Z","2021-05-11T00:00:00Z","2018-05-02T00:00:00Z","2022-05-23T00:00:00Z","2022-10-05T00:00:00Z","2021-05-11T00:00:00Z","2022-05-23T00:00:00Z","2020-05-18T00:00:00Z","2021-05-10T00:00:00Z","2018-10-17T00:00:00Z","2021-10-03T00:00:00Z","2022-05-20T00:00:00Z","2021-10-03T00:00:00Z","2018-05-02T00:00:00Z","2021-09-26T00:00:00Z","2022-05-20T00:00:00Z","2018-10-17T00:00:00Z","2021-05-11T00:00:00Z","2022-05-12T00:00:00Z","2021-10-03T00:00:00Z","2022-05-23T00:00:00Z"],["KH, OM","MF, LML","OM, DM","AL, TBM","MF, DIØ","MØN, MM","MF, LMFL","MØN, MM","MF","","MF, LD","MF, NB","MF, LD","KH","AL, TBM","MF, DIØ","MF, MK","AL, DIØ","MF","MF, LM","OM, DM","MF, LML","MF, LMFL","MØN, MM","MF, MK","MF","MF, LM","MØN, MM","MF, MK","AL, MØN","MF, LML","MF, LD","MF, MK","OM, DM","MF, LML","MF, MK","AL, DIØ","MF, LM","MF","MF, LMFL","MF, MK","MF, LMFL","MF, LD","MF, NB","MF","MF","?","MF, MK","MF, LMFL","MF, MK"],["","","","","Knekt ny","","","","","","","","","","","","","","","Bytter pinne","","Ny pinne","","","Målt bak W","","","","","","","","Broken, new wire on 25/05","","også mye pap i miks","","Ny","Liten mørk ring","","Målt utenfor mørk ring","","Målt bak","","ten V, pap Ø","","","","","",""],[2022,2021,2022,2019,2021,2019,2021,2019,2020,2017,2018,2021,2018,2022,2019,2021,2022,2020,2018,2021,2022,2021,2021,2019,2022,2020,2021,2019,2022,2019,2021,2018,2022,2022,2021,2022,2020,2021,2018,2021,2022,2021,2018,2021,2020,2018,2021,2022,2021,2022],["med","ten","ten",null,"ten",null,"ten",null,"pap",null,null,"pap",null,"lin",null,"rub","ten","med",null,"rub","rub","rub","med",null,"pap","pap","fus",null,"bal",null,"med",null,"ten","pap","med","pap","med","rub",null,"rub","med","rub",null,"pap","pap",null,"rub","rub","med","pap"],["rub","ten","ten",null,"ten",null,"rub",null,"pap",null,null,"pap",null,"cus",null,"med","pap","med",null,"rub","rub","pap","rub",null,"bal","pap","med",null,"bal",null,"med",null,"ten","pap","med","pap","med","fus",null,"rub","med","rub",null,"ten","pap",null,"rub","rub","med","pap"],["W1","W1","E2","W1","E1","W1","E1","W2","W2","single","V2","E1","V1","W1","E2","E1","E1","W2","H1","W1","W2","E1","E1","W2","E1","W2","E1","E1","W1","W1","W1","V1","E1","E1","W2","E2","E2","W2","H1","W1","W2","E2","V1","E2","E1","H2","W2","E1","W2","W2"],[8.6,7.8,12.3,11.1,12.3,10.2,12.3,8.5,12,14.1,10.3,8.5,11.5,7.7,11.5,10,15,14.5,10.7,8.9,7.7,6.4,11.8,10,13.5,10.8,7.5,10.5,7.7,12.1,6.6,12.2,7.5,8.9,10,7.2,11.7,8.1,11.7,8.5,12.8,10,9,7.1,9.5,10.9,10.5,7.2,12.8,11.8],["fall","fall","fall","spring","spring","fall","fall","fall","spring","fall","spring","fall","spring","fall","spring","spring","spring","spring","fall","spring","fall","spring","fall","fall","spring","spring","spring","fall","spring","fall","spring","spring","spring","fall","spring","spring","spring","spring","fall","fall","spring","fall","spring","fall","spring","fall","spring","spring","fall","spring"],[2022,2021,2022,2019,2021,2019,2021,2019,2022,2017,2018,2021,2018,2022,2019,2021,2022,2020,2018,2021,2022,2021,2021,2019,2022,2022,2021,2019,2022,2019,2021,2018,2022,2022,2021,2022,2020,2021,2018,2021,2022,2021,2018,2021,2022,2018,2021,2022,2021,2022]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>Plot_no<\/th>\n      <th>Pin_no<\/th>\n      <th>Treatment<\/th>\n      <th>date<\/th>\n      <th>Observer<\/th>\n      <th>Remarks<\/th>\n      <th>tab_year<\/th>\n      <th>Species_W<\/th>\n      <th>Species_E<\/th>\n      <th>pinPosition<\/th>\n      <th>Height_cm<\/th>\n      <th>season<\/th>\n      <th>year<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,8,12,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"Plot_no","targets":2},{"name":"Pin_no","targets":3},{"name":"Treatment","targets":4},{"name":"date","targets":5},{"name":"Observer","targets":6},{"name":"Remarks","targets":7},{"name":"tab_year","targets":8},{"name":"Species_W","targets":9},{"name":"Species_E","targets":10},{"name":"pinPosition","targets":11},{"name":"Height_cm","targets":12},{"name":"season","targets":13},{"name":"year","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p><br></p>
@@ -469,7 +474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 10 &lt;NA&gt;         72</code></pre>
 </div>
 </div>
-<p>How can Treatment be NA? Turns out these are all new pins, and all from the fall. I will delete the rows for a different reason <a href="#id">below</a>.</p>
+<p>How can Treatment be NA? Turns out these are all new pins, and all from the fall. I end up deleting the rows for a different reason <a href="#id">below</a>.</p>
 </section>
 <section id="dates" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="dates"><span class="header-section-number">2.2.2</span> Dates</h3>
@@ -527,7 +532,7 @@ Figure&nbsp;2.2: Checking inconsistency in date entries.
 </div>
 <div class="cell">
 <details class="code-fold">
-<summary>Confirming tht day and month have been switched.</summary>
+<summary>Confirming that day and month have been switched.</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dat_long <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Plot_no <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>),</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>         season <span class="sc">==</span> <span class="st">"fall"</span>,</span>
@@ -535,7 +540,7 @@ Figure&nbsp;2.2: Checking inconsistency in date entries.
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">View</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>I will reverse these now.</p>
+<p>I will reverse these now. <a href="#fig-dateCheck3" class="quarto-xref">Figure&nbsp;<span>2.3</span></a> confirms that this has worked.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Fix date mistake</summary>
@@ -573,7 +578,7 @@ Figure&nbsp;2.3: Checking measurement dates after fixing mistake.
 </div>
 </div>
 </div>
-<p>Then there were some errors with the dates in the spring of 2019 <a href="#fig-datesCheck" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>.</p>
+<p><a href="#fig-datesCheck" class="quarto-xref">Figure&nbsp;<span>2.1</span></a> show there were some errors with the dates in the spring of 2019.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -630,6 +635,7 @@ Figure&nbsp;2.3: Checking measurement dates after fixing mistake.
 </section>
 <section id="year" class="level4" data-number="2.2.2.2">
 <h4 data-number="2.2.2.2" class="anchored" data-anchor-id="year"><span class="header-section-number">2.2.2.2</span> Year</h4>
+<p>Looking into the intersection between year and season in <a href="#fig-distYears" class="quarto-xref">Figure&nbsp;<span>2.4</span></a>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -653,7 +659,7 @@ Figure&nbsp;2.4: Distribution of data points over the years and seasons
 </div>
 </div>
 </div>
-<p>I wonder why there are so relatively few observation in spring 2020.</p>
+<p>I wonder why there are so few observation in spring 2020.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -739,7 +745,7 @@ Figure&nbsp;2.4: Distribution of data points over the years and seasons
 </table>
 </div>
 </div>
-<p>Turns out some of the 2020 data (those added to the 2020 tab) was give the wrong date.</p>
+<p>Turns out some of the 2020 data (those added to the 2020 tab) was given the wrong date.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Fix year mistake</summary>
@@ -864,6 +870,7 @@ Figure&nbsp;2.5: Distribution of data points over the years and seasons after mo
 </section>
 <section id="pin-position" class="level3" data-number="2.2.3">
 <h3 data-number="2.2.3" class="anchored" data-anchor-id="pin-position"><span class="header-section-number">2.2.3</span> Pin position</h3>
+<p>The variable <code>pinPosition</code> indicates the position of duplicate pine measurements. These measurements should probably be combined later to make one data point per measurement. The variable uses different short names, like V for venstre (<em>left</em>); E for east, single is there is just one measurement, etc.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1078,6 +1085,7 @@ Figure&nbsp;2.5: Distribution of data points over the years and seasons after mo
 <span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  )) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+<p><a href="#tbl-pinposition" class="quarto-xref">Table&nbsp;<span>2.1</span></a> shows the number of data points for each combination of pin position and year.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1088,8 +1096,14 @@ Figure&nbsp;2.5: Distribution of data points over the years and seasons after mo
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="at">full_width=</span>F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div id="tbl-pinposition" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pinposition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.1: Number of data points per pin position and year combination. E = east. W = west.
+</figcaption>
+<div aria-describedby="tbl-pinposition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="lightable-paper caption-top table table-sm table-striped small">
+<table class="lightable-paper cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
@@ -1188,6 +1202,9 @@ Figure&nbsp;2.5: Distribution of data points over the years and seasons after mo
 </table>
 </div>
 </div>
+</figure>
+</div>
+</div>
 </section>
 <section id="id" class="level3" data-number="2.2.4">
 <h3 data-number="2.2.4" class="anchored" data-anchor-id="id"><span class="header-section-number">2.2.4</span> ID variable</h3>
@@ -1204,12 +1221,13 @@ Figure&nbsp;2.5: Distribution of data points over the years and seasons after mo
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-4c54a54d5da409731256" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-4c54a54d5da409731256">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8"],["8.14","8.14new","8.14","8.14","8.14new","8.14new","8.14","8.14"],["","","","Not sure about note. Veldig mørk på ø, synkende bor byttes","Sterk misfarget, bytte pinne","","Missing, new wire",""],[2019,2019,2020,2020,2021,2021,2022,2022],["spring","fall","spring","fall","spring","fall","spring","fall"],[10.3,9.1,9.1,8.1,11.3,10.5,10.5,9.699999999999999]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>Remarks<\/th>\n      <th>year<\/th>\n      <th>season<\/th>\n      <th>Height_cm<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,5]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"Remarks","targets":2},{"name":"year","targets":3},{"name":"season","targets":4},{"name":"Height_cm","targets":5}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-c8a51d226a2dedd6ad1c" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c8a51d226a2dedd6ad1c">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8"],["8.14","8.14new","8.14","8.14","8.14new","8.14new","8.14","8.14"],["","","","Not sure about note. Veldig mørk på ø, synkende bor byttes","Sterk misfarget, bytte pinne","","Missing, new wire",""],[2019,2019,2020,2020,2021,2021,2022,2022],["spring","fall","spring","fall","spring","fall","spring","fall"],[10.3,9.1,9.1,8.1,11.3,10.5,10.5,9.699999999999999]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>Remarks<\/th>\n      <th>year<\/th>\n      <th>season<\/th>\n      <th>Height_cm<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,5]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"Remarks","targets":2},{"name":"year","targets":3},{"name":"season","targets":4},{"name":"Height_cm","targets":5}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-<p>It appears the pin was replaced in the fall of 2019. I must assume that what is recorded there is the height of the new pin, and is therefore not compareable to the spring value that same year. The <em>new</em> annotation only last one time, i.e.&nbsp;it is not repeated the next season. In the spring of 2021 the wire seems to have been replaced again, and then again in the fall. In the spring of 2022 it was replaced a forth(?) time, according to the remarks. But this time the ID is unchanged.</p>
-<p>Conclusion. I will calculate the growth per season, if and only if the spring and fall height are recorded on the same pin/wire. That means I can remove seasons where the fall measurements are done on new wires. There are also some IDs that have the suffix <em>old</em>. In these cases there should always be one measurement for the same date with the prefix <em>new,</em> meaning I can delete all <em>old</em> measurements from the spring heights.</p>
+<p>It appears the pin was replaced in the fall of 2019. I must assume that what is recorded there is the height of the new pin, and is therefore not compereable to the spring value that same year. The <em>new</em> annotation only last one time, i.e.&nbsp;it is not repeated the next season. In the spring of 2021 the wire seems to have been replaced again, and then again in the fall. In the spring of 2022 it was replaced a forth(?) time, according to the remarks. But this time the ID is unchanged.</p>
+<p><strong>Conclusion</strong></p>
+<p>I will calculate the growth per season, <em>if and only if</em> the spring and fall height are recorded on the same pin/wire. That means I can remove seasons where the fall measurements are done on new wires. There are also some IDs that have the suffix <em>old</em>. In these cases there should always be one measurement for the same date with the prefix <em>new,</em> meaning I can delete all <em>old</em> measurements from the spring heights.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1243,7 +1261,7 @@ Figure&nbsp;2.5: Distribution of data points over the years and seasons after mo
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>text_in_ID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"NØ"</span>, <span class="st">"SV"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Then I remove those that are <em>old</em> in spring. I thought I could also remove those that are new in the fall, but turn out these could be labeled <em>new</em> in spring, and then that label is kept though that season (and reset again in the next season). First, here is a view of the occurrences of <em>old</em> and <em>new</em> IDs.</p>
+<p>Then I remove those that are <em>old</em> in spring. I thought I could also remove those that are new in the fall, but turn out these could be labeled <em>new</em> in spring, and then that label is kept through that season (and reset again in the next season). First, here is a view of the occurrences of <em>old</em> and <em>new</em> IDs.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1501,7 +1519,7 @@ Figure&nbsp;2.5: Distribution of data points over the years and seasons after mo
 </section>
 <section id="species" class="level3" data-number="2.2.5">
 <h3 data-number="2.2.5" class="anchored" data-anchor-id="species"><span class="header-section-number">2.2.5</span> Species</h3>
-<p>The <em>Shapgnum</em> species identities were recorded for each pin/wire from 2020 and onwards.</p>
+<p>The <em>Shapgnum</em> species identities were recorded for each pin/wire from 2020 and onwards. There are 8 unique species, excluding <em>dead</em> and <em>med (bal)</em>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1514,8 +1532,8 @@ Figure&nbsp;2.5: Distribution of data points over the years and seasons after mo
 <span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-2292042915b9724d0df4" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-2292042915b9724d0df4">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"],["ang","aus","bal","cus","dead","fus","lin","maj","med","med (bal)","med/bal","pap","pap/med","rub","rub/pap","rus","ten",null],[164,226,465,288,8,532,188,134,1937,8,8,2620,8,1384,8,190,1508,4530]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Species_E<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Species_E","targets":1},{"name":"n","targets":2}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-baff3438a194ce8d0f2b" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-baff3438a194ce8d0f2b">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"],["ang","aus","bal","cus","dead","fus","lin","maj","med","med (bal)","med/bal","pap","pap/med","rub","rub/pap","rus","ten",null],[164,226,465,288,8,532,188,134,1937,8,8,2620,8,1384,8,190,1508,4530]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Species_E<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Species_E","targets":1},{"name":"n","targets":2}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -1628,7 +1646,7 @@ Figure&nbsp;2.5: Distribution of data points over the years and seasons after mo
 <span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
 -3.9000  0.1500  0.5000  0.5763  0.9000  5.2000     161 </code></pre>
 </div>
 </div>
