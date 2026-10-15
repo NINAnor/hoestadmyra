@@ -8,8 +8,8 @@ This web page documents the preparation of a data set on the effects of hydrolog
 mosses on a Norwegian bog, before uploading it to GBIF.
 
 After this initial introduction chapter, 
-@data-exp goes through the data cleaning and general formatting, 
-and @mapping describes how individual columns in the spreadsheet have been mapped to DwC terms.
+@sec-data-exp goes through the data cleaning and general formatting, 
+and @sec-mapping describes how individual columns in the spreadsheet have been mapped to DwC terms.
 
 The raw datafiles are found under `data/`and has not been altered. 
 Instead, all data manipulation (formatting, fixing typos, adding metadata etc.) has been 
@@ -80,7 +80,7 @@ tm_shape(massifs) +
           shape=21,
           col = "green",
           alpha = 0.5)  +
-  tm_scale_bar(position = c("left", "bottom")) +
+  tm_scalebar(position = c("left", "bottom")) +
   tm_compass()
 ```
 

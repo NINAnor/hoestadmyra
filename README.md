@@ -12,7 +12,7 @@ Water table depth for all years, but maybe some data missing from autumn 2019.
 
 Climate data from local weather stations.
 
-_Nr 29 and 30 should be exluded from 2021 and 2022_
+_Nr 29 and 30 should be excluded from 2021 and 2022_
 
 `data/growthData.xlsx`
 Tabs: one per year. 
