@@ -17,11 +17,12 @@ library(kableExtra)
 
 ## Import and compile data
 
-The data set is located on GitHub in an `xlsx` format.
+The raw data set is in an `xlsx` format,  located under `data/`.
 The data are split into different tabs based on year.
+Here I read the data; harmonise and join the tabs into one dataframe.
 
 ```{r readData}
-#| code-summary: "Import data set"
+#| code-summary: "Import data set and combine tabs"
 
 dat <- read_excel("data/growthData.xlsx", 
     sheet = "y2017") |>
@@ -196,6 +197,8 @@ How can Treatment be NA?
 Turns out these are all new pins, and all from the fall.
 I end up deleting the rows for a different reason [below](#id).
 
+_Hollow_ and _Hummock_ could perhaps be moved into a new column, called microtopography or something. 
+
 ### Dates
 
 #### Seasons
@@ -207,11 +210,13 @@ Are the dates entered correctly to match the seasons?
 dat_long |>
   ggplot() +
   geom_bar(aes(x = month(date)))+
-  facet_grid(year(date)~season)
+  facet_grid(year(date)~season, scale ="free") +
+  theme_bw()
 ```
 
-There are some measurements in the fall of 2020 that are wrong.
-It turns out the month and day have been switched for plots 8 and 9:
+There are three weird things. 1) There are some fall measurements for 2020 that are placed in june. 2) Some spring measuremnts in 2019 are from October. 3) The x-axis in @fig-datesCheck starts from 1, indicating there is same data recorded for January.
+
+##### Date issue nr 1
 
 ```{r fig-dateCheck2}
 #| fig.cap: "Checking inconsistency in date entries."
@@ -263,6 +268,8 @@ dat_long |>
   facet_grid(Plot_no~.)
 ```
 
+##### Date issue nr 2
+
 @fig-datesCheck show there were some errors with the dates in the spring of 2019.
 
 ```{r }
@@ -299,6 +306,36 @@ dat_long <- dat_long |>
   ))
 ```
 
+##### Date issue nr 1
+
+There is one observation taken before May, i.e. in winter. The observation is from January 2017. 
+```{r}
+dat_long |> filter(month(date) < 5)
+```
+
+The season is recorded as 'fall', so probably this is also just a matter of switching month and day.
+
+```{r}
+dat_long <- dat_long |>
+  mutate(date = case_when(
+    month(date) < 5 ~ date("2019-09-01"),
+    .default = date
+  ))
+```
+
+Here is a remake of @fig-datesCheck with date issues 1 - 3 sorted:
+
+```{r fig-datesCheck4}
+#| fig.cap: "Distribution of measurement dates (months)."
+dat_long |>
+  ggplot() +
+  geom_bar(aes(x = month(date)))+
+  facet_grid(year(date)~season, scale ="free") +
+  theme_bw()
+```
+
+Thats better. All the spring measurements are from May, and the fall measurements are from months 9 - 11.
+ 
 #### Year
 Looking into the intersection between year and season in @fig-distYears.
 
