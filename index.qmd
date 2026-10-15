@@ -80,7 +80,7 @@ tm_shape(massifs) +
           shape=21,
           col = "green",
           alpha = 0.5)  +
-  tmap::tm_scale_bar(position = c("left", "bottom")) +
+  tm_scalebar(position = c("left", "bottom")) +
   tm_compass()
 ```
 
