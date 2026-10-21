@@ -574,7 +574,7 @@ oldInSameFall <- dat_long |>
 Then I remove some records based on this link variable.
 
 ```{r}
-dat_longx <- dat_long |>
+dat_long <- dat_long |>
   mutate(link = paste(ID_num, tab_year, pinPosition, sep= "_")) |>
   filter(
   # Drop new fall measurements unless:
@@ -593,7 +593,7 @@ dat_longx <- dat_long |>
   ) |>
   select(-link)
 
-dat_longx |>
+dat_long |>
   group_by(year, season) |>
   count(text_in_ID) |>
   spread(text_in_ID, n) |>
@@ -606,7 +606,7 @@ Then I check the remarks and the ID history column for some 'new' fall measureme
 
 ```{r}
 #| eval: false
-dat_longx |>
+dat_long |>
 filter(text_in_ID == "new" & season == "fall") |>
 pull(Remarks)
 # Ok
@@ -627,7 +627,7 @@ dat_long |>
   distinct(ID_num)
 ```
 
-`ID_num` is a character column, but we can have it as numeric and round to two decimal points.
+This could bee an excel thing. `ID_num` is a character column, but we can have it as numeric and round to two decimal points.
 
 ```{r}
 #| code-summary: 'fix weird ID_num'
@@ -673,9 +673,8 @@ dat_long |>
   group_by(year) |>
   count(Species_W, Species_E) |>
   ungroup() |>
-  slice_head(n = 5) |>
-  kbl()|>
-  kable_paper(full_width=F)
+  #slice_head(n = 5) |>
+  DT::datatable()
 ```
 
 > Species were recorded from year 2020.
