@@ -97,7 +97,6 @@ myMap
 #tmap::tmap_save(tm = myMap, filename = "img/map.png")
 ```
 
-::: {.callout.note}
-The shape file with the position of vegetation quadrats do not contain the
-quadrat ID for all cases. We need to add that.
-:::
+
+<!-- The shape file with the position of vegetation quadrats do not contain the
+quadrat ID for all cases. We need to add that. -->
