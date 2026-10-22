@@ -12,4 +12,5 @@ Imports:
   DT,
   readxl,
   kableExtra,
-  tmap
+  tmap,
+  arrow

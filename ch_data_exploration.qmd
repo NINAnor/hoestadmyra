@@ -983,10 +983,12 @@ The distribution of data points across treatments now looks much better as well.
 
 ```{r}
 dat_analysis <- dat_season |>
-  select(ID = ID_char, plot = Plot_no, pin = Pin_no, Treatment, year, date, spring_height_cm = spring, fall_height_cm = fall, species_E, species_W)
+  select(ID = ID_char, plot = Plot_no, pin = Pin_no, Treatment, year, date, spring_height_cm = spring, fall_height_cm = fall, growth_cm, species_E, species_W)
+glimpse(dat_analysis)
 ```
 
 
 ```{r}
+#| eval: false
 arrow::write_parquet(dat_analysis, "data/dataset_cleaned.parquet")
 ```
