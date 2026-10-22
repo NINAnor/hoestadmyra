@@ -17,11 +17,12 @@ library(kableExtra)
 
 ## Import and compile data
 
-The data set is located on GitHub in an `xlsx` format.
+The raw data set is in an `xlsx` format, located under `data/`.
 The data are split into different tabs based on year.
+Here I read the data; harmonise and join the tabs into one dataframe.
 
 ```{r readData}
-#| code-summary: "Import data set"
+#| code-summary: "Import data set and combine tabs"
 
 dat <- read_excel("data/growthData.xlsx", 
     sheet = "y2017") |>
@@ -196,6 +197,8 @@ How can Treatment be NA?
 Turns out these are all new pins, and all from the fall.
 I end up deleting the rows for a different reason [below](#id).
 
+*Hollow* and *Hummock* could perhaps be moved into a new column, called microtopography or something.
+
 ### Dates
 
 #### Seasons
@@ -207,11 +210,16 @@ Are the dates entered correctly to match the seasons?
 dat_long |>
   ggplot() +
   geom_bar(aes(x = month(date)))+
-  facet_grid(year(date)~season)
+  facet_grid(year(date)~season, scale ="free") +
+  theme_bw()
 ```
 
-There are some measurements in the fall of 2020 that are wrong.
-It turns out the month and day have been switched for plots 8 and 9:
+There are three weird things.
+1) There are some fall measurements for 2020 that are placed in june.
+2) Some spring measuremnts in 2019 are from October.
+3) The x-axis in @fig-datesCheck starts from 1, indicating there is same data recorded for January.
+
+##### Date issue nr 1
 
 ```{r fig-dateCheck2}
 #| fig.cap: "Checking inconsistency in date entries."
@@ -263,6 +271,8 @@ dat_long |>
   facet_grid(Plot_no~.)
 ```
 
+##### Date issue nr 2
+
 @fig-datesCheck show there were some errors with the dates in the spring of 2019.
 
 ```{r }
@@ -299,7 +309,41 @@ dat_long <- dat_long |>
   ))
 ```
 
+##### Date issue nr 3
+
+There is one observation taken before May, i.e. in winter.
+The observation is from January 2017.
+
+```{r}
+dat_long |> filter(month(date) < 5)
+```
+
+The season is recorded as 'fall', so probably this is also just a matter of switching month and day.
+
+```{r}
+dat_long <- dat_long |>
+  mutate(date = case_when(
+    month(date) < 5 ~ date("2019-09-01"),
+    .default = date
+  ))
+```
+
+Here is a remake of @fig-datesCheck with date issues 1 - 3 sorted:
+
+```{r fig-datesCheck4}
+#| fig.cap: "Distribution of measurement dates (months)."
+dat_long |>
+  ggplot() +
+  geom_bar(aes(x = month(date)))+
+  facet_grid(year(date)~season, scale ="free") +
+  theme_bw()
+```
+
+Thats better.
+All the spring measurements are from May, and the fall measurements are from months 9 - 11.
+
 #### Year
+
 Looking into the intersection between year and season in @fig-distYears.
 
 ```{r fig-distYears}
@@ -364,9 +408,12 @@ dat_long |>
 
 ### Pin position
 
-The variable `pinPosition` indicates the position of duplicate pine measurements. 
-These measurements should probably be combined later to make one data point per measurement.
-The variable uses different short names, like V for venstre (_left_); E for east, single is there is just one measurement, etc.
+The variable `pinPosition` indicates the position of duplicate pine measurements.
+The variable uses different short names, like V for venstre (*left*); E for east, single is there is just one measurement, etc.
+For example, E1 and E2 represents two measurement to the east of the pin, perhaps done just to confirm each other, or they can also be done my different field personnel.
+These can be averaged.
+Measurements at E1 and W1 (and E2 and W2) can also be averaged if one ones to look at Sphagnum groth in general, but there are cases where there are different species recorded for E and W.
+Therefore we keep these separate, and let the end user decided what to do.
 
 ```{r}
 dat_long |>
@@ -407,6 +454,8 @@ dat_long <- dat_long |>
 ```
 
 @tbl-pinposition shows the number of data points for each combination of pin position and year.
+As we can see, duplicate measurements started in 2019.
+
 ```{r tbl-pinposition}
 #| tbl-cap: 'Number of data points per pin position and year combination. E = east. W = west.'
 dat_long |>
@@ -432,20 +481,13 @@ dat_long |>
   datatable()
 ```
 
-It appears the pin was replaced in the fall of 2019.
-I must assume that what is recorded there is the height of the new pin, 
-and is therefore not compereable to the spring value that same year.
+It appears the pin was replaced in the fall of 2019. I must assume that what is recorded there is the height of the new pin, and is therefore not comparable to the spring value that same year.
 The *new* annotation only last one time, i.e. it is not repeated the next season.
 In the spring of 2021 the wire seems to have been replaced again, and then again in the fall.
 In the spring of 2022 it was replaced a forth(?) time, according to the remarks.
 But this time the ID is unchanged.
 
-**Conclusion**
-
-I will calculate the growth per season, _if and only if_ the spring and fall height are recorded on the same pin/wire.
-That means I can remove seasons where the fall measurements are done on new wires.
-There are also some IDs that have the suffix *old*.
-In these cases there should always be one measurement for the same date with the prefix *new,* meaning I can delete all *old* measurements from the spring heights.
+Here are the suffices that are used:
 
 ```{r}
 dat_long |>
@@ -459,6 +501,7 @@ dat_long |>
 
 I will split the ID column into a numerical `ID_num`, and a `text_in_ID` field that contains the suffix, if any (e.g. *old* or *new*).
 In the same go I remove those with *direction* (NØ or SV) in the ID.
+I don't know what these are, and there is only 3 cases where this is the case.
 
 ```{r}
 dat_long <- dat_long|>
@@ -469,9 +512,30 @@ dat_long <- dat_long|>
   filter(!text_in_ID %in% c("NØ", "SV"))
 ```
 
-Then I remove those that are *old* in spring.
-I thought I could also remove those that are new in the fall, but turn out these could be labeled *new* in spring, and then that label is kept through that season (and reset again in the next season).
-First, here is a view of the occurrences of *old* and *new* IDs.
+I want to retain only one measurement per season, so that I can calculate one growth measurement per growing season.
+
+**Conclusion**
+
+I will calculate the growth per growing season, *if and only if* the spring and fall height are recorded on the same pin/wire.
+That means I can remove seasons where the fall measurements are done on new wires. 
+There are also some IDs that have the suffix *old*.
+In these cases there should always be one measurement for the same date with the prefix *new,* meaning I can delete all *old* measurements from the spring heights.
+I can also remove those that are *old* in spring, because these will not have a comparable measurement the next fall.
+I thought I could also remove all those that are new in the fall, but turn out these could be labeled *new* in spring, and then that label is kept through that season (and reset again in the next season).
+
+| Year | Season | ID | Intended action |
+|------------------|------------------|------------------|------------------|
+| 2020 | Fall | 8.14 | Keep |
+| 2021 | Spring | 8.14 | Keep |
+| 2021 | Fall | 8.14old | Keep |
+| 2021 | Fall | 8.14new | **Drop** (use the 'old' pin. Confirm that it's not a case of the 'new' suffix being wrongly repeated. Check that There is an 'old' measurement from the same date, and if not, that there is a 'new' measurement from the previous spring) |
+| 2022 | Spring | 8.14new | Keep |
+| 2022 | Fall | 8.14new | Keep |
+| 2023 | Spring | 8.14old | **Drop** ('old' is only used if a pin is replaced, so there should also be a 'new' pin from the same date) |
+
+: Examples of how pin IDs and suffices have been used in the field sheets, and the intended action that we aim for in the data cleaning. The dates extent to 2023 just to allow enough rows to show all the examples.
+
+Here is a view of the occurrences of *old* and *new* IDs.
 
 ```{r}
 dat_long <- dat_long |>
@@ -490,8 +554,6 @@ dat_long |>
 
 ```
 
-I need to remove those that are *new* in fall and that don't have any value labeled *new* in spring (i.e. that they are truly new that fall, and that the label is not simply carried from the spring record).
-Similarly, I want to remove those that are *old* in fall, and don't have any values labeled *old* in the preceding spring.
 First I create a link variable for the occurrences that I want to match against.
 
 ```{r}
@@ -504,6 +566,11 @@ oldInFall <- dat_long |>
   filter(season == "fall" & text_in_ID == "old") |>
   mutate(link = paste(ID_num, tab_year+1, pinPosition, sep= "_")) |>
   pull(link)
+
+oldInSameFall <- dat_long |>
+  filter(season == "fall" & text_in_ID == "old") |>
+  mutate(link = paste(ID_num, tab_year, pinPosition, sep= "_")) |>
+  pull(link)
 ```
 
 Then I remove some records based on this link variable.
@@ -512,21 +579,46 @@ Then I remove some records based on this link variable.
 dat_long <- dat_long |>
   mutate(link = paste(ID_num, tab_year, pinPosition, sep= "_")) |>
   filter(
-    ifelse(text_in_ID == "new" & !link %in% newInSpring,
-      season != "fall",
-      TRUE),
-    ifelse(text_in_ID == "old" & !link %in% oldInFall,
-      season != "spring",
-      TRUE)) |>
+  # Drop new fall measurements unless:
+  # - there is a new spring measurement, AND
+  # - there is no old measurement in the same fall
+  !(
+    text_in_ID == "new" &
+    season == "fall" &
+    (!link %in% newInSpring | link %in% oldInSameFall)
+  ),
+  #drop all 'old' measurements from spring
+  !(
+    text_in_ID == "old" &
+    season == "spring"
+  )
+  ) |>
   select(-link)
 
 dat_long |>
   group_by(year, season) |>
   count(text_in_ID) |>
   spread(text_in_ID, n) |>
-  select(-"-") |>
+  #select(-"-") |>
   kbl() |>
   kable_paper(full_width = F)
+```
+
+Then I check the remarks and the ID history column for some 'new' fall measurements and make sure they should indeed be kept.
+
+```{r}
+#| eval: false
+dat_long |>
+filter(text_in_ID == "new" & season == "fall") |>
+pull(Remarks)
+# Ok
+
+test <- dat_longx |>
+filter(text_in_ID == "new" & season == "fall") |>
+pull(ID_num)
+
+dat_longx |> filter(ID_num %in% test[c(1, 10, 15)] & pinPosition == "W1") |>  select(ID_num, season, text_in_ID, Remarks, year) |>View()
+# Looks good
 ```
 
 There are some ID numbers that look a bit weird:
@@ -537,19 +629,41 @@ dat_long |>
   distinct(ID_num)
 ```
 
-`ID_num` is a character column, but we can have it as numeric and round to two decimal points.
+This could bee an excel thing. 
+`ID_num` is a character column. 
+We can't just convert it as numeric and round to two decimal points, because 1.1 and 1.10 would be the same.
+But we could round Pin_no and Plot_no and join these to recreate the ID column.
 
 ```{r}
-#| code-summary: 'fix weird ID_num'
 dat_long <- dat_long |>
-  mutate(ID_num = round(as.numeric(ID_num), 2))
+  mutate(
+    Pin_no_char = as.character(round(Pin_no, 0)), 
+    Plot_no_char = as.character(round(Plot_no, 0))
+  ) |>
+    unite(ID_char, c(Plot_no_char, Pin_no_char), sep = "_")
+
+# check that no IDs are more then 5 characters
+dat_long |>
+  filter(nchar(ID_char) > 5)
+
 ```
+
+Then I confirm there is only one measurement per season.
+
+```{r}
+dat_long |>
+  group_by(ID_char, year, season, pinPosition, text_in_ID) |>
+  count() |> group_by(n) |> count()
+```
+
+
 
 ### Species
 
-The _Shapgnum_ species identities were recorded for each pin/wire from 2020 and onwards.
-There are 8 unique species, excluding _dead_ and _med (bal)_.
-
+The *Shapgnum* species identities were recorded for each pin/wire from 2020 and onwards.
+There are 8 unique species, excluding *dead*.
+If the dataset were to be published on GBIF, one would need to spell out the species names and find a solution to the double species observations. 
+I will just ignore that now and keep the species abbreviations.
 
 ```{r}
 #dat_long |>
@@ -584,9 +698,8 @@ dat_long |>
   group_by(year) |>
   count(Species_W, Species_E) |>
   ungroup() |>
-  slice_head(n = 5) |>
-  kbl()|>
-  kable_paper(full_width=F)
+  #slice_head(n = 5) |>
+  DT::datatable()
 ```
 
 > Species were recorded from year 2020.
@@ -599,7 +712,7 @@ The main response variable will be seasonal growth, from one spring to the follo
 dat_season <- dat_long |>
   pivot_wider(
     id_cols = c(
-      ID_num,
+      ID_char,
       Plot_no,
       Pin_no,
       pinPosition2,
@@ -611,11 +724,18 @@ dat_season <- dat_long |>
     values_fn = mean,
     unused_fn = list(
       Species_W = list,
-      Species_E = list
+      Species_E = list,
+      date = list
     )
   ) |>
   mutate(growth_cm = spring - fall)
 
+dat_season |>
+  pull(growth_cm) |>
+  plot()
+```
+
+```{r}
 dat_season |>
   pull(growth_cm) |>
   summary()
@@ -636,16 +756,13 @@ dat_season |>
   kable_paper()
 ```
 
--   EDGE has a large number of NA's in 2022.
-    That is because the edge treatment was dropped.
+-   EDGE has a large number of NA's in 2022. That is because the edge treatment was dropped.
 
 -   There is no big increase over time (e.g. due to more wires being replaced).
 
 -   The NA seem to be mostly random/evenly spread out
 
-
-Let's also look at the distribution of the actual data across 
-Treatments and years (i.e. after removing the NA's).
+Let's also look at the distribution of the actual data across Treatments and years (i.e. after removing the NA's).
 
 ```{r}
 dat_season |>
@@ -660,6 +777,7 @@ dat_season |>
 Edge, Hollow and hummocks are only included from 2021.
 
 Removing the NA's from the dataset:
+
 ```{r}
 #| code-summary: 'Removing NAs'
 dat_season <- dat_season |>
@@ -668,8 +786,9 @@ dat_season <- dat_season |>
 
 ### Unnest species list columns
 
-The species identities are preserved in the dataset as list columns, where one to six species names (abbreviations) are combined.
+The species identities are preserved in the dataset as list columns, where one to four species names (abbreviations) are combined.
 It can be four records if there are two from spring (e.g. W1 and W2) and two from the fall.
+Usually the spesies will be the same, but there could have been a species turnover, or an inditification error.
 
 I will first count the number of unique species names in the list columns, and then, if that returns a single species (which is not NA), I will extract the unique species name.
 If the species differed between the records, I will add NAs.
@@ -705,14 +824,15 @@ temp2 <- temp |>
       Pin_no,
       pinPosition2,
       Treatment,
-      year
+      year      
     ),
     names_from = season,
     values_from = Height_cm,
     values_fn = mean,
     unused_fn = list(
       Species_W = list,
-      Species_E = list
+      Species_E = list,
+      date = list
     )
   ) |>
   mutate(growth_cm = spring - fall)
@@ -750,18 +870,21 @@ dat_season <- dat_season |>
          )
 ```
 
-I'm pretty sure this has worked, since I tried in on the synthetic data, but there are just four cases of the species being different across the aggregated strata (mainly this would imply that there had been a species change during the growing season).
+I'm pretty sure this has worked, since I tried in on the synthetic data.
+There are no examples if species turnover, so we can use the `species`column, and drop all the others.
 
 ```{r}
-dat_season |>
-  count(sameSpecies_E, sameSpecies_W)
+table(dat_season$sameSpecies_E, useNA = "always")
+table(dat_season$sameSpecies_W, useNA = "always")
 ```
 
 ### Removing some plots
 
-Plot 28 should be Hollow (all the time). This was a data punching mistake.
+Plot 28 should be Hollow (all the time).
+This was a data punching mistake.
 Also, plots 29 and 30 should be excluded all together.
-Those are the two Edge plots. The _Edge_ treatment was discontinued.
+Those are the two Edge plots.
+The *Edge* treatment was discontinued.
 
 ```{r}
 #| code-summary: 'Removing plots 28-30'
@@ -775,25 +898,24 @@ dat_season <- dat_season |>
          -Species_E)
 ```
 
-
-
-I came across the case by chance.
+I came across this case by chance.
 Let's see it there are more cases like this.
-(This kind of problem can be avoided by having hierarchical datasets also far data field sheets and data punching).
+(This kind of problem can be avoided by having hierarchical datasets also for data field sheets and data punching).
 
 Here is a little code to check for more than one treatment for the same plot ID.
+
 ```{r}
 (dups <- dat_season |>
   group_by(Treatment) |>
-  count(ID_num) |>
+  count(ID_char) |>
   ungroup() |>
-  group_by(ID_num) |>
+  group_by(ID_char) |>
   count() |>
   filter(n > 1) |>
-  pull(ID_num))
+  pull(ID_char))
 ```
-There were none of these cases.
 
+There were none of these cases.
 
 ### Final check
 
@@ -855,3 +977,18 @@ dat_season |>
 ```
 
 The distribution of data points across treatments now looks much better as well.
+
+## Export final dataset for analyses
+
+
+```{r}
+dat_analysis <- dat_season |>
+  select(ID = ID_char, plot = Plot_no, pin = Pin_no, Treatment, year, date, spring_height_cm = spring, fall_height_cm = fall, growth_cm, species_E, species_W)
+glimpse(dat_analysis)
+```
+
+
+```{r}
+#| eval: false
+arrow::write_parquet(dat_analysis, "data/dataset_cleaned.parquet")
+```

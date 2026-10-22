@@ -56,11 +56,12 @@ quadrats <- sf::read_sf(paste0(path, "vegetationQuadrats1/veipunkter_vannbronner
 ```
 
 ```{r fig-studyMap}
-#| fig-cap: "Map of study area. Green circles are permanent vegetation quadrats.
-#| The shades of grey indicator different bog massifs."
+#| fig-cap: "Map of study area. Green circles are permanent vegetation quadrats. 
+#| The shades of grey indicator different bog massifs.
+#| The coordinate reference system is  UTM-33."
 #| code-summary: "Create map"
 #| cache: true
-tm_shape(massifs) +
+myMap <- tm_shape(massifs) +
   tm_polygons(col = "Name",
               palette = c("grey60", "grey70", "grey80"),
               legend.show=F) +
@@ -72,19 +73,30 @@ tm_shape(massifs) +
              ))) +
   tm_lines(col = "Ditch age",
            lwd=2,
-           palette = c("red", "orange")) +
-  #tm_shape(extrSites) +
-  #tm_polygons()
+           col.scale = tm_scale_categorical(
+              values = c("red", "orange"),
+          value.na = NA
+  )) +
+  tm_layout(
+    frame = TRUE,
+    frame.lwd = 1,
+    inner.margins = 0.05
+  ) +
   tm_shape(quadrats) +
   tm_dots(size = 2,
           shape=21,
           col = "green",
           alpha = 0.5)  +
   tm_scalebar(position = c("left", "bottom")) +
-  tm_compass()
+  tm_compass()+
+  tm_grid(
+    lines = FALSE,
+    labels.show = TRUE
+  )
+myMap
+#tmap::tmap_save(tm = myMap, filename = "img/map.png")
 ```
 
-::: {.callout.note}
-The shape file with the position of vegetation quadrats do not contain the
-quadrat ID for all cases. We need to add that.
-:::
+
+<!-- The shape file with the position of vegetation quadrats do not contain the
+quadrat ID for all cases. We need to add that. -->

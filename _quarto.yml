@@ -5,16 +5,12 @@ project:
 book:
   title: "Analysing the effect of bog ditches on Sphagnum communities"
   author: "Anders Kolstad"
-  repo-url: https://github.com/anders-kolstad/peatmoss_and_ditches
+  repo-url: https://github.com/NINAnor/hoestadmyra
   repo-branch: main
   repo-actions: [edit]
-  sharing: [twitter, facebook, linkedin]
   chapters:
     - index.qmd
     - ch_data_exploration.qmd
-    - ch_mapping.qmd
-  appendices:
-    - appendix-notes.qmd
     
 format:
   html: 
