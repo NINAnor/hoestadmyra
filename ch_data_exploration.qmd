@@ -24,7 +24,7 @@ Here I read the data; harmonise and join the tabs into one dataframe.
 ```{r readData}
 #| code-summary: "Import data set and combine tabs"
 
-dat <- read_excel("data/growthData.xlsx", 
+dat <- read_excel("data/rawData.xlsx", 
     sheet = "y2017") |>
   # remove some measurements from October (FALL2). 
   # These were measured again in November 
@@ -991,4 +991,9 @@ glimpse(dat_analysis)
 ```{r}
 #| eval: false
 arrow::write_parquet(dat_analysis, "data/dataset_cleaned.parquet")
+```
+
+
+```{r}
+test <- arrow::read_parquet("data/dataset_cleaned.parquet")
 ```
