@@ -1,0 +1,45 @@
+# Exporting the spatial files
+
+The spatial files are originally in a shape format. Here I combine them into a single geopackage with five layers.
+
+```{r}
+library(sf)
+# Destination
+gpkg <- "data/spatialData.gpkg"
+```
+
+
+```{r}
+#| eval: false
+library(purrr)
+
+# Find all shapefiles
+shp_files <- list.files(
+  "data",
+  pattern = "\\.shp$",
+  full.names = TRUE,
+  recursive = TRUE
+)
+
+
+# Remove existing file if necessary
+if (file.exists(gpkg)) file.remove(gpkg)
+
+# Write each shapefile as a separate layer
+walk(shp_files, \(file) {
+  layer_name <- tools::file_path_sans_ext(basename(file))
+
+  st_read(file, quiet = TRUE) |>
+    st_write(
+      gpkg,
+      layer = layer_name,
+      append = FALSE,
+      quiet = TRUE
+    )
+})
+```
+
+
+```{r}
+st_layers(gpkg)
+```
