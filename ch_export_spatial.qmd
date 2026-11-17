@@ -43,3 +43,8 @@ walk(shp_files, \(file) {
 ```{r}
 st_layers(gpkg)
 ```
+
+```{r}
+#| eval: false
+temp <- sf::read_sf(gpkg, layer = "veipunkter_vannbronner_ruter_2017")
+```
